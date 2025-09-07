@@ -22,6 +22,7 @@ from typing import Any, Optional
 import numpy as np
 import pandas as pd
 import torch
+import json
 from omegaconf import ListConfig
 from torch.utils.data import Dataset
 from transformers import PreTrainedTokenizer
@@ -87,12 +88,14 @@ class MultiTurnSFTDataset(Dataset):
             self.parquet_files[i] = copy_local_path_from_hdfs(parquet_file, verbose=True)
 
     def _read_files_and_process(self):
-        def series_to_item(ls):
+        def jsonstr_to_item(ls):
             import numpy
             import pandas
 
             while isinstance(ls, pandas.core.series.Series | numpy.ndarray) and len(ls) == 1:
                 ls = ls[0]
+            if isinstance(ls, str):
+                ls = json.loads(ls)
             return ls
 
         dataframes = []
@@ -102,11 +105,11 @@ class MultiTurnSFTDataset(Dataset):
         self.dataframe = pd.concat(dataframes)
 
         # Extract messages list from dataframe
-        self.messages = self.dataframe[self.messages_key].apply(series_to_item).tolist()
+        self.messages = self.dataframe[self.messages_key].apply(jsonstr_to_item).tolist()
 
         # Extract tools list from dataframe
         if self.tools_key in self.dataframe.columns:
-            self.tools = self.dataframe[self.tools_key].apply(convert_nested_value_to_list_recursive).tolist()
+            self.tools = self.dataframe[self.tools_key].apply(jsonstr_to_item).tolist()
         else:
             self.tools = None
         # Extract enable_thinking list from dataframe

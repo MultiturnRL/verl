@@ -1,0 +1,323 @@
+[
+  {
+    "description": "Parameters for fetching a URL.",
+    "properties": {
+      "url": {
+        "description": "URL to fetch",
+        "format": "uri",
+        "minLength": 1,
+        "title": "Url",
+        "type": "string"
+      },
+      "max_length": {
+        "default": 5000,
+        "description": "Maximum number of characters to return.",
+        "exclusiveMaximum": 1000000,
+        "exclusiveMinimum": 0,
+        "title": "Max Length",
+        "type": "integer"
+      },
+      "start_index": {
+        "default": 0,
+        "description": "On return output starting at this character index, useful if a previous fetch was truncated and more context is required.",
+        "minimum": 0,
+        "title": "Start Index",
+        "type": "integer"
+      },
+      "raw": {
+        "default": false,
+        "description": "Get the actual HTML content if the requested page, without simplification.",
+        "title": "Raw",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "url"
+    ],
+    "title": "Fetch",
+    "type": "object"
+  },
+  {
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "Search query string. For best results: 1) Prefer English keywords as English content is often richer and more up-to-date, especially in technical and academic fields; 2) Use specific keywords rather than vague phrases; 3) Use quotes \"exact phrase\" for forced matching; 4) Use site:domain to limit to specific websites; 5) Use -exclude to filter results; 6) Use OR to connect alternative terms; 7) Prioritize professional terminology; 8) Keep to 2-5 keywords for balanced results; 9) Choose appropriate language based on target content (e.g., use Chinese only when specifically searching for Chinese resources). Examples: 'climate change report 2024 site:gov -opinion' or '\"machine learning algorithms\" tutorial (Python OR Julia)'"
+      },
+      "limit": {
+        "type": "number",
+        "description": "Number of search results to return (default: 10, recommended range: 1-20)"
+      },
+      "timeout": {
+        "type": "number",
+        "description": "Timeout for search operation in milliseconds (default: 30000, can be adjusted based on network conditions)"
+      }
+    },
+    "required": [
+      "query"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+  },
+  {
+    "properties": {
+      "code": {
+        "title": "Code",
+        "type": "string"
+      },
+      "language": {
+        "default": "python",
+        "title": "Language",
+        "type": "string"
+      },
+      "timeout": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Timeout"
+      }
+    },
+    "required": [
+      "code"
+    ],
+    "type": "object"
+  },
+  {
+    "properties": {
+      "notebook_content": {
+        "title": "Notebook Content",
+        "type": "string"
+      },
+      "timeout": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Timeout"
+      }
+    },
+    "required": [
+      "notebook_content"
+    ],
+    "type": "object"
+  },
+  {
+    "properties": {
+      "command": {
+        "title": "Command",
+        "type": "string"
+      },
+      "timeout": {
+        "default": 30,
+        "title": "Timeout",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "command"
+    ],
+    "title": "execute_commandArguments",
+    "type": "object"
+  },
+  {
+    "properties": {
+      "count": {
+        "default": 10,
+        "title": "Count",
+        "type": "integer"
+      }
+    },
+    "title": "get_command_historyArguments",
+    "type": "object"
+  },
+  {
+    "properties": {},
+    "title": "get_current_directoryArguments",
+    "type": "object"
+  },
+  {
+    "properties": {
+      "path": {
+        "title": "Path",
+        "type": "string"
+      }
+    },
+    "required": [
+      "path"
+    ],
+    "title": "change_directoryArguments",
+    "type": "object"
+  },
+  {
+    "properties": {
+      "path": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Path"
+      }
+    },
+    "title": "list_directoryArguments",
+    "type": "object"
+  },
+  {
+    "properties": {
+      "path": {
+        "title": "Path",
+        "type": "string"
+      },
+      "content": {
+        "title": "Content",
+        "type": "string"
+      },
+      "mode": {
+        "default": "overwrite",
+        "title": "Mode",
+        "type": "string"
+      }
+    },
+    "required": [
+      "path",
+      "content"
+    ],
+    "title": "write_fileArguments",
+    "type": "object"
+  },
+  {
+    "properties": {
+      "path": {
+        "title": "Path",
+        "type": "string"
+      },
+      "start_row": {
+        "default": null,
+        "title": "Start Row",
+        "type": "integer"
+      },
+      "end_row": {
+        "default": null,
+        "title": "End Row",
+        "type": "integer"
+      },
+      "as_json": {
+        "default": false,
+        "title": "As Json",
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "path"
+    ],
+    "title": "read_fileArguments",
+    "type": "object"
+  },
+  {
+    "properties": {
+      "path": {
+        "title": "Path",
+        "type": "string"
+      },
+      "content": {
+        "title": "Content",
+        "type": "string"
+      },
+      "row": {
+        "default": null,
+        "title": "Row",
+        "type": "integer"
+      },
+      "rows": {
+        "default": null,
+        "items": {},
+        "title": "Rows",
+        "type": "array"
+      }
+    },
+    "required": [
+      "path",
+      "content"
+    ],
+    "title": "insert_file_contentArguments",
+    "type": "object"
+  },
+  {
+    "properties": {
+      "path": {
+        "title": "Path",
+        "type": "string"
+      },
+      "row": {
+        "default": null,
+        "title": "Row",
+        "type": "integer"
+      },
+      "rows": {
+        "default": null,
+        "items": {},
+        "title": "Rows",
+        "type": "array"
+      },
+      "substring": {
+        "default": null,
+        "title": "Substring",
+        "type": "string"
+      }
+    },
+    "required": [
+      "path"
+    ],
+    "title": "delete_file_contentArguments",
+    "type": "object"
+  },
+  {
+    "properties": {
+      "path": {
+        "title": "Path",
+        "type": "string"
+      },
+      "content": {
+        "title": "Content",
+        "type": "string"
+      },
+      "row": {
+        "default": null,
+        "title": "Row",
+        "type": "integer"
+      },
+      "rows": {
+        "default": null,
+        "items": {},
+        "title": "Rows",
+        "type": "array"
+      },
+      "substring": {
+        "default": null,
+        "title": "Substring",
+        "type": "string"
+      }
+    },
+    "required": [
+      "path",
+      "content"
+    ],
+    "title": "update_file_contentArguments",
+    "type": "object"
+  }
+]
