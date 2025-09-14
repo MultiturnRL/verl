@@ -357,6 +357,19 @@ class MultiTurnSFTDataset(Dataset):
             # Zero out position IDs for padding
             position_ids = position_ids * attention_mask
 
+            # # Decode non-padded tokens back to text for inspection and store/log it.
+            # # nonpad_tokens = input_ids[attention_mask.bool()].tolist()
+            # try:
+            #     decoded_text = tokenizer.decode(input_ids, skip_special_tokens=False)
+            # except Exception:
+            #     # Fallback to decoding without skipping special tokens
+            #     decoded_text = tokenizer.decode(input_ids, skip_special_tokens=False)
+
+            # # Store last decoded text on the dataset for debugging/inspection and also log it.
+            # self._last_decoded_input = decoded_text
+            # with open("last_decoded_input.txt", "w", encoding="utf-8") as f:
+            #     f.write(decoded_text)
+
             return {
                 "input_ids": input_ids,
                 "attention_mask": attention_mask,
